@@ -299,10 +299,11 @@ h1 {
   cursor: pointer;
   transition: transform 0.25s, box-shadow 0.25s;
 }
+
 .btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.7);
+  transform: translateY(-3px);
 }
+
 .primary {
   color: #fff;
   background: linear-gradient(110deg, #7c3aed, #6366f1, #0891b2);
@@ -444,110 +445,100 @@ h1 {
   .btn { padding: 12px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-  }
-  /* Fix profile photo */
+/* Mobile-safe profile photo */
+.avatar-wrapper {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 20px;
+  flex-shrink: 0;
+}
+
 .avatar {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
   overflow: hidden;
   padding: 0;
+  animation: avatarGlow 3s ease-in-out infinite alternate;
 }
 
 .avatar img {
   display: block;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   border-radius: 50%;
   border: 4px solid var(--card);
 }
 
-/* Fix overlapping name */
+.avatar-badge {
+  position: absolute;
+  bottom: 3px;
+  right: 0;
+  z-index: 2;
+}
+
+/* Keep text inside the card */
+.profile-card {
+  width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
 .profile-card h1 {
   position: relative;
   z-index: 1;
-  font-size: clamp(25px, 5vw, 35px);
+  font-size: clamp(25px, 6vw, 35px);
   line-height: 1.3;
   letter-spacing: -0.5px;
+  overflow-wrap: anywhere;
+}
+
+.bio {
+  width: 100%;
   overflow-wrap: break-word;
 }
 
-.avatar-badge {
-  z-index: 2;
-}
-.js .reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.js .reveal.show {
-  opacity: 1;
-  transform: none;
-}
+img {
+  max-width: 100%;
 }
 
-/* Certificates grid */
-.cert-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-.certificate {
-  padding: 20px 28px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  text-align: center;
+/* Mobile layout */
+@media (max-width: 480px) {
+  body {
+    padding: 75px 12px 25px;
+  }
+
+  .profile-card {
+    padding: 28px 17px 22px;
+  }
+
+  .avatar-wrapper,
+  .avatar {
+    width: 112px;
+    height: 112px;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* Hover effects */
-.certificate,
-.project-item {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.certificate:hover,
-.project-item:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-}
-
-/* Floating status tag */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-.project-status {
-  display: inline-block;
-  animation: float 2s ease-in-out infinite;
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-/* Button hover */
-.btn {
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.7);
-  
-.certificates {
-    padding: 20px;
-    text-align: center;
-}
-
-.certificate {
-    margin: 25px auto;
-    max-width: 600px;
-}
-
-.certificate img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-}
+ 
